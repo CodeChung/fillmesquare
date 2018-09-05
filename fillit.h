@@ -6,7 +6,7 @@
 /*   By: hchung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 21:46:30 by hchung            #+#    #+#             */
-/*   Updated: 2018/09/04 17:30:55 by hchung           ###   ########.fr       */
+/*   Updated: 2018/09/04 21:17:17 by hchung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,8 @@ int		ft_parser(int fd, char c, int hash, int tet);
 
 int		**make_tet_list(int fd);
 int		**coordinate_transplant(int fd);
+
+int		abs(int i);
+int		verify_tet(int **tet_list);
+
+int		**minimize_tet(int **tet_list, int tet);

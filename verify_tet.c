@@ -6,7 +6,7 @@
 /*   By: hchung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 12:13:02 by hchung            #+#    #+#             */
-/*   Updated: 2018/09/04 17:33:52 by hchung           ###   ########.fr       */
+/*   Updated: 2018/09/04 20:44:23 by hchung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,49 @@ int		abs(int i)
 		return (i);
 }
 
+int		tet_check(int *str, int tet)
+{
+	int	tet_coord;
+	int coord_rider;
+	int	hash_sides;
+
+	tet_coord = 0;
+	coord_rider = 0;
+	hash_sides = 0;
+	while (tet_coord < 8)
+	{
+		if (tet_coord % 2 == 0)
+		{
+			while (coord_rider < 8)
+			{
+				if (str[tet_coord] == str[coord_rider])
+				{
+					if (abs(str[tet_coord + 1] - str[coord_rider + 1]) == 1)
+						hash_sides++;
+				}
+				coord_rider += 2;
+			}
+			coord_rider = 1;
+			tet_coord++;
+		}
+		else if (tet_coord % 2 != 0)
+		{
+			while (coord_rider < 8)
+			{
+				if (str[tet_coord] == str[coord_rider])
+				{
+					if (abs(str[tet_coord - 1] - str[coord_rider - 1]) == 1)
+						hash_sides++;
+				}
+				coord_rider += 2;
+			}
+			coord_rider = 0;
+			tet_coord++;
+		}
+	}
+	return (hash_sides == 6 || hash_sides == 6) ? 1 : 0;
+}
+
 int		verify_tet(int **tet_list, int tet)
 {
 	int i;
@@ -30,11 +73,14 @@ int		verify_tet(int **tet_list, int tet)
 	i = 0;
 	valid_tet = 0;
 	tet_coord = 0;
+	tet_list = minimize_tet(tet_list, tet);
 	while (i < tet)
 	{
-		while (tet_coord < 8)
-		{
-			if (tet_coord % 2 == 0)
-			{
-				
+		if (tet_check(tet_list[i++], tet))
+			valid_tet++;
+		i++;
+	}
+	if (valid_tet == tet)
+		return (1);
+	return (0);				
 }
