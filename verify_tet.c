@@ -1,25 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit.h                                           :+:      :+:    :+:   */
+/*   verify_tet.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hchung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/03 21:46:30 by hchung            #+#    #+#             */
-/*   Updated: 2018/09/04 17:30:55 by hchung           ###   ########.fr       */
+/*   Created: 2018/09/04 12:13:02 by hchung            #+#    #+#             */
+/*   Updated: 2018/09/04 17:33:52 by hchung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-ifndef blah blah blah
-//remember that we use fd a lot in different functions but we forget to initialize, fix this down the road
+#include "libft.h"
+#include "fillit.h"
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <otherstuffeventually.h>
+int		abs(int i)
+{
+	if (i < 0)
+		return (i * -1);
+	else
+		return (i);
+}
 
-int		ft_error();
-int		ft_usage();
-int		ft_parser(int fd, char c, int hash, int tet);
+int		verify_tet(int **tet_list, int tet)
+{
+	int i;
+	int	valid_tet;
+	int tet_coord;
 
-int		**make_tet_list(int fd);
-int		**coordinate_transplant(int fd);
+	i = 0;
+	valid_tet = 0;
+	tet_coord = 0;
+	while (i < tet)
+	{
+		while (tet_coord < 8)
+		{
+			if (tet_coord % 2 == 0)
+			{
+				
+}
