@@ -6,36 +6,38 @@
 /*   By: hchung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 17:02:16 by hchung            #+#    #+#             */
-/*   Updated: 2018/09/04 17:51:58 by hchung           ###   ########.fr       */
+/*   Updated: 2018/09/06 02:37:22 by hchung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "fillit.h"
 
-//this function just minimizes the x and y coordinates to make it easier for us to use! 
+int		find_min(int **tet_list, int tet, int i, int is_it_x)
+{
+	int low;
+	int tet_coord;
 
-int		**minimize_tet(int	**tet_list, int tet)
+	low = 69;
+	tet_coord = is_it_x ? 0 : 1;
+	while (tet_coord < 8)
+	{
+		low = (low <= tet_list[i][tet_coord]) ? low : tet_list[i][tet_coord];
+		tet_coord += 2;
+	}
+	return (low);
+}
+
+int		**minimize_tet(int **tet_list, int tet, int i)
 {
 	int x_min;
 	int y_min;
-	int i;
-	int tet_coord;
+	int	tet_coord;
 
-	int i = 0;
-	int tet_coord = 0;
-	int	x_min = tet_list[i][tet_coord];
-	int y_min = tet_list[i][tet_coord + 1];
+	tet_coord = 0;
 	while (i < tet)
 	{
-		while (tet_coord < 8)
-		{
-			if (tet_coord % 2 == 0)
-				x_min = (x_min <= tet_list[i][tet_coord]) ? x_min : tet_list[i][tet_coord++];
-			else
-				y_min = (y_min <= tet_list[i][tet_coord]) ? y_min : tet_list[i][tet_coord++];
-		}
-		tet_coord = 0;
+		x_min = find_min(tet_list, tet, i, 1);
+		y_min = find_min(tet_list, tet, i, 0);
 		while (tet_coord < 8)
 		{
 			if (tet_coord % 2 == 0)
@@ -48,7 +50,3 @@ int		**minimize_tet(int	**tet_list, int tet)
 	}
 	return (tet_list);
 }
-
-
-
-
