@@ -6,11 +6,12 @@
 /*   By: hchung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 17:02:16 by hchung            #+#    #+#             */
-/*   Updated: 2018/09/06 02:37:22 by hchung           ###   ########.fr       */
+/*   Updated: 2018/09/06 04:09:37 by hchung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include "libft.h"
 
 int		find_min(int **tet_list, int tet, int i, int is_it_x)
 {
@@ -33,19 +34,24 @@ int		**minimize_tet(int **tet_list, int tet, int i)
 	int y_min;
 	int	tet_coord;
 
-	tet_coord = 0;
 	while (i < tet)
 	{
 		x_min = find_min(tet_list, tet, i, 1);
 		y_min = find_min(tet_list, tet, i, 0);
 		while (tet_coord < 8)
 		{
+			tet_coord = 0;
 			if (tet_coord % 2 == 0)
-				tet_list[i][tet_coord] = tet_list[i][tet_coord++] - x_min;
+			{
+				tet_list[i][tet_coord] = tet_list[i][tet_coord] - x_min;
+				tet_coord++;
+			}
 			else
-				tet_list[i][tet_coord] = tet_list[i][tet_coord++] - y_min;
+			{
+				tet_list[i][tet_coord] = tet_list[i][tet_coord] - y_min;
+				tet_coord++;
+			}
 		}
-		tet_coord = 0;
 		i++;
 	}
 	return (tet_list);

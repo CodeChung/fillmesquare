@@ -6,7 +6,7 @@
 /*   By: hchung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 12:13:02 by hchung            #+#    #+#             */
-/*   Updated: 2018/09/06 03:27:40 by hchung           ###   ########.fr       */
+/*   Updated: 2018/09/06 04:03:07 by hchung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		hash_count(int *str, int tet_coord, int coord_rider, int is_odd)
 	return (hash_sides);
 }
 
-int		tet_check(int *str)
+int	tet_check(int *str)
 {
 	int	tet_coord;
 	int coord_rider;
@@ -84,10 +84,10 @@ int		verify_tet(int **tet_list, int tet)
 	i = 0;
 	valid_tet = 0;
 	tet_coord = 0;
-	tet_list = minimize_tet(tet_list, tet, 0, 0);
+	tet_list = minimize_tet(tet_list, tet, 0);
 	while (i < tet)
 	{
-		if (tet_check(tet_list[i++], tet))
+		if (tet_check(tet_list[i++]))
 			valid_tet++;
 		i++;
 	}
