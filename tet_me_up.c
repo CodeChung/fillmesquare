@@ -5,80 +5,73 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hchung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/03 21:10:22 by hchung            #+#    #+#             */
-/*   Updated: 2018/09/06 04:48:03 by hchung           ###   ########.fr       */
+/*   Created: 2018/09/08 15:37:20 by hchung            #+#    #+#             */
+/*   Updated: 2018/09/10 03:54:36 by hchung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft.h"
-#include <stdio.h>
 
-int		**make_tet_list(int fd)
+int		**make_tet_list(int tet)
 {
 	int		**tet_list;
 	int		i;
-	int		tet;
 
-	tet = ft_parser(fd, 0, 0, 0);
-	tet_list = (int **)malloc(sizeof(int*) * tet);
+	tet_list = (int **)malloc(sizeof(int*) * tet + 1);
 	i = 0;
 	if (!tet_list)
 		return (NULL);
-	while (i < tet)
+	while (i <= tet)
 	{
-		tet_list[i++] = (int *)malloc(sizeof(int) * 8);
+		tet_list[i] = (int *)malloc(sizeof(int) * 8);
+		i++;
 	}
+	tet_list[tet] = NULL;
 	return (tet_list);
 }
 
-int		**coordinate_transplant(int fd, int x, int y, int tet_list_i)
+int		tet_tat(int *str, int val, int index)
 {
-	int **tet_list;
-	int tet;
-	int tet_coord;
-	char c;
+	str[index] = val;
+	index++;
+	return (index);
+}
 
-	tet_coord = 0;
-	tet_list = make_tet_list(fd);
-	//if (!(tet = ft_parser(fd, 0, 0, 0)))
-	//	return (NULL);
-	while (read(fd, &c, 1) > 0)
+void	helper(char c, int *x, int *y)
+{
+	if (c == '\n')
 	{
-		if (c == '.')
+		*x = 0;
+		if (*y == 3)
+			*y = -1;
+		else
+			*y = *y + 1;
+	}
+}
+
+int		**coordinate_transplant(int fd, int x, int y, int tet)
+{
+	t_helper	h;
+
+	h.tet_coord = 0;
+	h.tet_list = make_tet_list(tet);
+	h.tet_list_i = 0;
+	while (read(fd, &h.c, 1) > 0)
+	{
+		helper(h.c, &x, &y);
+		if (h.c == '.')
 			x++;
-		else if (c == '#')
+		else if (h.c == '#')
 		{
-			tet_list[tet_list_i][tet_coord] = (tet_coord % 2 ? y : x++);
-			tet_coord++;
-			tet_list[tet_list_i][tet_coord] = (tet_coord % 2 ? y : x);
-			tet_coord++;
-		}
-		else if (c == '\n' && y < 4 && x == 4)
-		{
-			y++;
-			x = 0;
-		}
-		else if (c == '\n' && y == 4)
-		{
-			y = 0;
-			x = 0;
-			tet_list_i++;
-			tet_coord = 0;
+			if (h.tet_coord == 8)
+			{
+				h.tet_list_i++;
+				h.tet_coord = 0;
+			}
+			h.tet_coord = tet_tat(h.tet_list[h.tet_list_i], x, h.tet_coord);
+			h.tet_coord = tet_tat(h.tet_list[h.tet_list_i], y, h.tet_coord);
+			x++;
 		}
 	}
-	for (tet_coord=0;tet_coord < 8;tet_coord++)
-	{
-		printf("%d\n",tet_list[tet_list_i][tet_coord]);
-	}
-	return (tet_list);
-}
-
-int main(int argc, char **argv)
-{
-	int fd;
-
-	fd = open(argv[1], O_RDONLY);
-	coordinate_transplant(fd, 0, 0, 0);
-	return (0);
+	return (h.tet_list);
 }

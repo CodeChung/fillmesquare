@@ -5,24 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hchung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/04 17:02:16 by hchung            #+#    #+#             */
-/*   Updated: 2018/09/06 04:09:37 by hchung           ###   ########.fr       */
+/*   Created: 2018/09/08 19:40:06 by hchung            #+#    #+#             */
+/*   Updated: 2018/09/10 03:15:52 by hchung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft.h"
 
-int		find_min(int **tet_list, int tet, int i, int is_it_x)
+int		find_min(int **tet_list, int i, int tet_coord)
 {
 	int low;
-	int tet_coord;
 
-	low = 69;
-	tet_coord = is_it_x ? 0 : 1;
+	low = tet_list[i][tet_coord];
 	while (tet_coord < 8)
 	{
-		low = (low <= tet_list[i][tet_coord]) ? low : tet_list[i][tet_coord];
+		low = (low <= tet_list[i][tet_coord] ? low : tet_list[i][tet_coord]);
 		tet_coord += 2;
 	}
 	return (low);
@@ -30,25 +27,25 @@ int		find_min(int **tet_list, int tet, int i, int is_it_x)
 
 int		**minimize_tet(int **tet_list, int tet, int i)
 {
-	int x_min;
-	int y_min;
-	int	tet_coord;
+	int tet_coord;
+	int x_low;
+	int y_low;
 
 	while (i < tet)
 	{
-		x_min = find_min(tet_list, tet, i, 1);
-		y_min = find_min(tet_list, tet, i, 0);
+		x_low = find_min(tet_list, i, 0);
+		y_low = find_min(tet_list, i, 1);
+		tet_coord = 0;
 		while (tet_coord < 8)
 		{
-			tet_coord = 0;
 			if (tet_coord % 2 == 0)
 			{
-				tet_list[i][tet_coord] = tet_list[i][tet_coord] - x_min;
+				tet_list[i][tet_coord] = tet_list[i][tet_coord] - x_low;
 				tet_coord++;
 			}
 			else
 			{
-				tet_list[i][tet_coord] = tet_list[i][tet_coord] - y_min;
+				tet_list[i][tet_coord] = tet_list[i][tet_coord] - y_low;
 				tet_coord++;
 			}
 		}

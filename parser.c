@@ -6,22 +6,21 @@
 /*   By: hchung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/02 21:48:43 by hchung            #+#    #+#             */
-/*   Updated: 2018/09/06 04:14:43 by hchung           ###   ########.fr       */
+/*   Updated: 2018/09/10 05:54:57 by hchung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft.h"
 
 int		ft_error(void)
 {
-	write (1, "y", 1);
+	ft_putstr("error\n");
 	return (0);
 }
 
 int		ft_usage(void)
 {
-	write(1, "n", 1);
+	ft_putstr("pls use right number of args, bub");
 	return (0);
 }
 

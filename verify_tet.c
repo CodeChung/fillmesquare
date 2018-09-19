@@ -6,11 +6,10 @@
 /*   By: hchung <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 12:13:02 by hchung            #+#    #+#             */
-/*   Updated: 2018/09/06 04:03:07 by hchung           ###   ########.fr       */
+/*   Updated: 2018/09/10 06:02:48 by hchung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "fillit.h"
 
 int		abs(int i)
@@ -21,14 +20,14 @@ int		abs(int i)
 		return (i);
 }
 
-int		hash_count(int *str, int tet_coord, int coord_rider, int is_odd)
+int		hash_count(int *str, int tet_coord, int coord_rider, int odd)
 {
 	int hash_sides;
 
 	hash_sides = 0;
 	while (coord_rider < 8)
 	{
-		if (!is_odd)
+		if (!odd)
 		{
 			if (str[tet_coord] == str[coord_rider])
 			{
@@ -50,7 +49,7 @@ int		hash_count(int *str, int tet_coord, int coord_rider, int is_odd)
 	return (hash_sides);
 }
 
-int	tet_check(int *str)
+int		tet_check(int *str)
 {
 	int	tet_coord;
 	int coord_rider;
@@ -89,9 +88,10 @@ int		verify_tet(int **tet_list, int tet)
 	{
 		if (tet_check(tet_list[i++]))
 			valid_tet++;
-		i++;
 	}
 	if (valid_tet == tet)
+	{
 		return (1);
+	}
 	return (0);
 }
